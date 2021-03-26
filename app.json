@@ -1,0 +1,12 @@
+{
+  "name": "uberpongrn",
+  "displayName": "uberpongrn",
+  "expo": {
+    "name": "uberpongrn",
+    "slug": "uberpongrn",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
