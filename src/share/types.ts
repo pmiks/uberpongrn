@@ -15,23 +15,29 @@ export interface RegistrationI {
 
 export interface UserRatingI {
   id: string
-  nickname: string
+  username: string
+  rating: number
   firstName: string
-  secondName: string
-  pts: number
-  rang: UberLevel | null
+  lastName: string
+  isPremium?: boolean
+  isBlocked?: boolean
+  rang?: UberLevel
 }
 
 export type TLoginInput = {
-  email: string
+  username: string
   password: string
-  device: string
 }
 
 type TLoginResponse = {
-  code: number
+  code?: number
   token?: string
   error?: string
   message?: string
   type?: string
+}
+
+type TGame = {
+  winnerId: string
+  loserId: string
 }

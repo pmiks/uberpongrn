@@ -15,11 +15,11 @@ export const TopRateBanner: FC<Props> = ({ userRate }) => {
         <>
           <Row>
             <TextWhite>{userRate.firstName.toUpperCase()}</TextWhite>
-            <TextRed> {userRate.nickname.toUpperCase()} </TextRed>
-            <TextWhite>{userRate.secondName.toUpperCase()}</TextWhite>
+            <TextRed> {userRate.username.toUpperCase()} </TextRed>
+            <TextWhite>{userRate.lastName.toUpperCase()}</TextWhite>
           </Row>
           <Row>
-            <TextRed>{userRate.pts} pts</TextRed>
+            <TextRed>{userRate.rating} pts</TextRed>
           </Row>
         </>
       )}
@@ -28,7 +28,7 @@ export const TopRateBanner: FC<Props> = ({ userRate }) => {
         height={normVert(50)}
         style={{
           position: 'absolute',
-          bottom: -5,
+          bottom: 0,
           right: 0,
         }}
       />

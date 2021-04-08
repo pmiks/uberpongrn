@@ -2,7 +2,7 @@ import { AuthStack } from './auth-navigation'
 import { AppStack } from './app-navigation'
 import React, { FC, useEffect, useState } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { getAuthTokenAsync } from '../share/auth'
+import { getAuthTokenAsync, getUserNameAsync } from '../share/auth'
 
 import { Routes } from './routes'
 import { AuthContext } from '../share/context'
@@ -11,8 +11,12 @@ const Stack = createStackNavigator()
 
 export const RootNavigator: FC = () => {
   const [loadingUser, setLoadingUser] = useState(true)
-  const [isLogin, setIsLogin] = useState<boolean>(true)
-
+  const [isLogin, setIsLogin] = useState<boolean>(false)
+  const [currentUser, setCurrentUser] = useState({ username: '', pts: 0 })
+  const setUserData = async () => {
+    let username = await getUserNameAsync()
+    setCurrentUser({ username, pts: 0 })
+  }
   useEffect(() => {
     getAuthTokenAsync((token: string) => {
       setIsLogin(() => {
@@ -21,23 +25,30 @@ export const RootNavigator: FC = () => {
         return !!token
       })
     })
+    setUserData()
+    //    let username = getUserNameAsync()
+    //    setCurrentUser({ username, pts: 0 })
   }, [])
 
   return (
     <AuthContext.Provider
       value={{
         isLogin,
+        currentUser,
         login: () => setIsLogin(true),
         logout: () => setIsLogin(false),
+        setCurrentUser,
       }}
     >
-      <Stack.Navigator headerMode='none'>
-        {isLogin ? (
-          <Stack.Screen name={Routes.AppStack} component={AppStack} />
-        ) : (
-          <Stack.Screen name={Routes.AuthStack} component={AuthStack} />
-        )}
-      </Stack.Navigator>
+      {!loadingUser && (
+        <Stack.Navigator headerMode='none'>
+          {isLogin ? (
+            <Stack.Screen name={Routes.AppStack} component={AppStack} />
+          ) : (
+            <Stack.Screen name={Routes.AuthStack} component={AuthStack} />
+          )}
+        </Stack.Navigator>
+      )}
     </AuthContext.Provider>
   )
 }

@@ -1,17 +1,33 @@
 import { StatusBar } from 'expo-status-bar'
 import React, { FC, useState } from 'react'
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import { SvgLogo } from '../ui/icons/logo'
 import { SvgNewGame } from '../ui/icons/new-game'
 import styled from 'styled-components'
 import { Button } from '../ui/button/button-text'
-import { InputText } from '../ui/input/input'
+import { PickerField } from '../ui/picker/picker'
 import { theme, normHor, normVert, isIOS } from '../theme'
 import { useNavigation } from '@react-navigation/native'
 import { Routes } from '../navigation/routes'
+import { UserRatingI } from '../share/types'
 
-export const NewGame: FC = () => {
+type Props = {
+  items?: UserRatingI[]
+  onSubmit?: (winnerId: string, loserId: string) => void
+}
+
+export const NewGame: FC<Props> = ({ items, onSubmit }) => {
   const navigation = useNavigation()
+  const [winner, setWinner] = useState('')
+  const [loser, setLoser] = useState('')
+
+  const onChangeWinner = (val: string) => {
+    if (val === loser) setLoser('')
+    setWinner(val)
+  }
+  const onChangeLoser = (val: string) => {
+    if (val === winner) setWinner('')
+    setLoser(val)
+  }
 
   return (
     <Banner>
@@ -20,15 +36,26 @@ export const NewGame: FC = () => {
         width={normHor(111)}
         height={normVert(23)}
       />
-      <InputText errorFieldOff placeholder={'Winner'} />
-      <InputText errorFieldOff placeholder={'Loser'} />
+      <PickerField
+        selectedValue={winner}
+        onValueChange={onChangeWinner}
+        items={items}
+        name={'Winner'}
+      />
+      <PickerField
+        selectedValue={loser}
+        onValueChange={onChangeLoser}
+        items={items}
+        name={'Loser'}
+      />
       <Button
-        disabled={false}
+        disabled={!(winner && loser)}
         variant={'PRIMARY'}
         text={'SUBMIT'}
         onPress={() => {
-          alert('Submitted')
-          navigation.navigate(Routes.AppStack)
+          onSubmit(winner, loser)
+          setWinner('')
+          setLoser('')
         }}
       />
     </Banner>

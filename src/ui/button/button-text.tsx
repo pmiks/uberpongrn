@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 import styled, { css } from 'styled-components'
 import { theme, normVert, normHor } from '../../theme'
 import { ButtonVariant } from '../../enum/button.styles'
@@ -33,6 +33,19 @@ const Container = styled(TouchableOpacity)<Props>`
     `,
   )}
 `
+const styles = StyleSheet.create({
+  shadow: {
+    elevation: 4,
+    shadowColor: theme('colors.background.1'),
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2.22,
+  },
+})
+
 const StyledText = styled(Text)<{ variant?: buttonVariant }>`
   color: white;
   ${switchProp('variant', {
@@ -50,7 +63,7 @@ const StyledText = styled(Text)<{ variant?: buttonVariant }>`
 
 export const Button: FC<Props> = ({ text, ...props }) => {
   return (
-    <Container {...props}>
+    <Container style={styles.shadow} {...props}>
       <StyledText variant={props.variant}>{text}</StyledText>
     </Container>
   )

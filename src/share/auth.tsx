@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage'
-import { TLoginInput, TLoginResponse } from './types'
+import { TLoginInput, TLoginResponse, TGame } from './types'
 
-import { API_URL, AUTH_TOKEN_KEY } from './config'
+import { API_URL, AUTH_TOKEN_KEY, USER_NAME_KEY } from './config'
 
 export const getAuthTokenAsync = async (
   getToken?: (token: string) => void,
@@ -22,11 +22,27 @@ export const removeAuthTokenAsync = async (): Promise<void> => {
   await AsyncStorage.removeItem(AUTH_TOKEN_KEY)
 }
 
+export const getUserNameAsync = async (): Promise<string | null> => {
+  return (await AsyncStorage.getItem(USER_NAME_KEY)) || ''
+}
+
+export const setUserNameAsync = async (name: string): Promise<void> => {
+  await AsyncStorage.setItem(USER_NAME_KEY, name)
+}
+
+export const removeUserNameAsync = async (): Promise<void> => {
+  await AsyncStorage.removeItem(USER_NAME_KEY)
+}
+
 export const login = async (
   loginInput: TLoginInput,
 ): Promise<TLoginResponse> => {
-  const response = await fetch(`${API_URL}/login`, {
+  //alert(JSON.stringify(loginInput))
+  const response = await fetch(`${API_URL}user/signin`, {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(loginInput),
   })
 
@@ -44,4 +60,30 @@ export const logout = async (token: string): Promise<void> => {
   if (!response.ok) {
     throw new Error(response.statusText)
   }
+}
+
+export const getUsers = async (): Promise<void> => {
+  const token = await getAuthTokenAsync()
+  const response = await fetch(`${API_URL}user`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  //alert(JSON.stringify(await response.json()))
+  return await response.json()
+}
+
+export const sendGame = async (game: TGame): Promise<void> => {
+  const token = await getAuthTokenAsync()
+  const response = await fetch(`${API_URL}game/create`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(game),
+  })
+
+  return await response.json()
 }

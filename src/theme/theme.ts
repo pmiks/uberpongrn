@@ -7,7 +7,9 @@ export const isIOS = Platform.OS === 'ios'
 import { colors } from './colors'
 const fontSizes = [10, 12, 14, 15, 16, 17, 18, 19, 20, 25, 30, 35, 50]
 export const AppTheme = {
-  fontSizes: fontSizes.map(size => normVert(size)),
+  //fontSizes: fontSizes.map(size => normVert(size)),
+  fontSizes: fontSizes.map(size => normHor(size)),
+  //fontSizes: fontSizes,
   lineHeights: [12, 18, 19, 20, 22],
 
   colors,

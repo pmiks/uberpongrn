@@ -19,6 +19,7 @@ const ErrorText = styled(Text)`
   font-size: ${theme('fontSizes.1')};
 `
 const Error = styled(View)`
+  align-self: center;
   flex-direction: row;
   height: ${normVert(15)}px;
 `
