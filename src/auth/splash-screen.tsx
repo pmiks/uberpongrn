@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { FC } from 'react'
+import { View, TouchableOpacity } from 'react-native'
 import { SvgU } from '../ui/icons/u'
 import styled from 'styled-components'
 import { theme, normHor, normVert, isIOS } from '../theme'

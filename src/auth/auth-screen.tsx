@@ -12,12 +12,12 @@ import { theme, normHor, normVert, isIOS } from '../theme'
 import { useNavigation } from '@react-navigation/native'
 import { Routes } from '../navigation/routes'
 import { AuthI } from '../share/types'
-import img from '../../assets/img/Logo-1.png'
 import { AuthContext } from '../share/context'
 import { login } from '../share/auth'
 import { setAuthTokenAsync, setUserNameAsync } from '../share/auth'
-import { ErrorMessage } from './error-message'
+import { ErrorMessage } from './ui/error-message'
 import { SafeAreaContainer } from '../ui/safe-area-container'
+import { LogoArea } from './ui/logo-area'
 
 export const AuthScreen: FC = () => {
   const { login: setIsLogin, setCurrentUser } = useContext(AuthContext)
@@ -43,13 +43,11 @@ export const AuthScreen: FC = () => {
       })
 
       if (!response.token) {
-        //   setStatus(camelCase(response.message))
         setErrorAnswer(response.message)
       }
-      //alert(JSON.stringify(value) + ' ' + JSON.stringify(response))
+
       if (response.token) {
         navigation.navigate(Routes.SplashScreen)
-
         response.token && (await setAuthTokenAsync(response.token))
         await setUserNameAsync(value.nickname)
         setCurrentUser({ username: value.nickname, pts: 0 })
@@ -60,33 +58,22 @@ export const AuthScreen: FC = () => {
       }
     } catch (error) {
       setErrorAnswer(error.message)
-      //      setStatus(camelCase(error.message))
     } finally {
       setLoadingLogin(false)
     }
-
-    //    navigation.navigate(Routes.SplashScreen)
-    //    setTimeout(() => setIsLogin(), 3000)
   }
 
   return (
     <SafeAreaContainer>
       <KeyboardAwareScrollView
-        bounces={false}
+        bounce={false}
         extraScrollHeight={10}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={contentContainerStyle}
         keyboardShouldPersistTaps='always'
       >
         <Container>
-          <LogoArea>
-            <Image
-              style={{ width: normHor(324), height: normVert(208) }}
-              source={img}
-              resizeMode={'contain'}
-            />
-          </LogoArea>
-
+          <LogoArea />
           <Formik
             initialValues={initialValues}
             onSubmit={onSubmitAsync}
@@ -123,7 +110,7 @@ export const AuthScreen: FC = () => {
                   style={{ marginTop: normVert(25) }}
                   disabled={!isValid}
                   variant={'PRIMARY'}
-                  text={'Sign In'}
+                  text={'Log In'}
                   onPress={handleSubmit}
                 />
               </AuthContainer>
@@ -170,13 +157,4 @@ const FootContainer = styled(View)`
   align-items: center;
   align-self: center;
   justify-content: space-between;
-`
-
-const LogoArea = styled(View)`
-  position: relative;
-  align-self: stretch;
-  margin-top: ${normVert(36)};
-  height: ${normVert(208)};
-  padding-left: ${normHor(18)};
-  padding-right: ${normHor(18)};
 `

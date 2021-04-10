@@ -12,22 +12,24 @@ const Stack = createStackNavigator()
 export const RootNavigator: FC = () => {
   const [loadingUser, setLoadingUser] = useState(true)
   const [isLogin, setIsLogin] = useState<boolean>(false)
-  const [currentUser, setCurrentUser] = useState({ username: '', pts: 0 })
+  const [currentUser, setCurrentUser] = useState<{
+    username: string
+    pts: number
+  }>({ username: '', pts: 0 })
+
   const setUserData = async () => {
     let username = await getUserNameAsync()
     setCurrentUser({ username, pts: 0 })
   }
+
   useEffect(() => {
     getAuthTokenAsync((token: string) => {
       setIsLogin(() => {
         setLoadingUser(false)
-
         return !!token
       })
     })
     setUserData()
-    //    let username = getUserNameAsync()
-    //    setCurrentUser({ username, pts: 0 })
   }, [])
 
   return (

@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Routes } from './routes'
-import { RateScreen } from '../Rate/rate-screen'
+import { RateScreen } from '../rate/rate-screen'
 
 const App = createStackNavigator()
 

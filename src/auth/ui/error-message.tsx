@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
-import { theme, normVert } from '../theme'
+import { theme, normVert } from '../../theme'
+
 type Props = {
   message: string
 }

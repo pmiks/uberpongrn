@@ -2,8 +2,6 @@ import React, { FC } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Routes } from './routes'
 import { AuthScreen } from '../auth/auth-screen'
-import { RegistrationScreen } from '../auth/registration-screen'
-import { RateScreen } from '../Rate/rate-screen'
 import { SplashScreen } from '../auth/splash-screen'
 
 const Auth = createStackNavigator()

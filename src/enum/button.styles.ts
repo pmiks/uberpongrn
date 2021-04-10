@@ -3,3 +3,8 @@ export enum ButtonVariant {
   OUTLINE = 'OUTLINE',
   FILLED = 'FILLED',
 }
+
+export enum ButtonSize {
+  SMALL = 'SMALL',
+  NORMAL = 'NORMAL',
+}

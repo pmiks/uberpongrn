@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
-import React, { FC, useState } from 'react'
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import React, { FC } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { SvgLogoRotate } from '../ui/icons/logo-rotate'
 import styled from 'styled-components'
 import { Button } from '../ui/button/button-text'

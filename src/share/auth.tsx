@@ -22,7 +22,7 @@ export const removeAuthTokenAsync = async (): Promise<void> => {
   await AsyncStorage.removeItem(AUTH_TOKEN_KEY)
 }
 
-export const getUserNameAsync = async (): Promise<string | null> => {
+export const getUserNameAsync = async (): Promise<string> => {
   return (await AsyncStorage.getItem(USER_NAME_KEY)) || ''
 }
 

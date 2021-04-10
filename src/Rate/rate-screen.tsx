@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import React, { FC, useEffect, useState, useContext, useCallback } from 'react'
 import { StyleSheet, View, FlatList } from 'react-native'
 import styled from 'styled-components'
-import { theme, normHor, normVert, isIOS } from '../theme'
+import { theme, normHor, normVert } from '../theme'
 import { RateListItem } from './rate-item'
 import { UserRatingI } from '../share/types'
 import { RateListHeader } from './rate-header'
@@ -16,9 +16,8 @@ import {
 } from '../share/auth'
 import { UberLevel } from '../enum/uberlevel'
 import { sendGame } from '../share/auth'
-import SplashScreen from 'react-native-splash-screen'
 
-export const RateScreen: FC = ({ navigation }) => {
+export const RateScreen: FC<any> = ({ navigation }) => {
   const [list, setList] = useState<UserRatingI[]>()
   const [refreshList, setRefreshList] = useState<boolean>(false)
   const [selectedItem, setSelectedItem] = useState<number>(0)
